@@ -37,7 +37,7 @@ func startServer() {
 
 	r.HandleFunc("/put", DataPut).Methods("POST")
 
-	log.Fatal(http.ListenAndServeTLS(":9001", "certs/server.crt", "certs/server.key", r))
+	log.Fatal(http.ListenAndServeTLS(":9001", "certs/cert.pem", "certs/key.pem", r))
 	//log.Fatal(http.ListenAndServe(":9001", r))
 }
 

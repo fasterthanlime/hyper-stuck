@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"crypto/tls"
-	"crypto/x509"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -41,18 +40,9 @@ func doReq(c *http.Client) (err error) {
 func main() {
 	client := &http.Client{}
 
-	// Create a pool with the server certificate since it is not signed
-	// by a known CA
-	caCert, err := ioutil.ReadFile("certs/ca.crt")
-	if err != nil {
-		log.Fatalf("Reading server certificate: %s", err)
-	}
-	caCertPool := x509.NewCertPool()
-	caCertPool.AppendCertsFromPEM(caCert)
-
 	// Create TLS configuration with the certificate of the server
 	tlsConfig := &tls.Config{
-		RootCAs: caCertPool,
+		InsecureSkipVerify: true,
 	}
 
 	// Use the proper transport in the client

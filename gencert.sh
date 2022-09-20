@@ -1,8 +1,6 @@
+#!/bin/bash -eux
 
-
-openssl genrsa -out ca.key 2048
-openssl req -new -x509 -key ca.key -out ca.crt -days 3560 -config ca.cnf
-
-openssl genrsa -out server.key 2048
-openssl req -new -key server.key -out server.csr -days 3650 -config server.cnf
-openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt
+openssl req \
+	-nodes \
+	-subj '/CN=localhost' \
+	-x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365
